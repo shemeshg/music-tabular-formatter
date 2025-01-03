@@ -36,8 +36,9 @@ Eisoteric example:
 
 1. Open VSCode.
 2. Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`.
+2. Drag the the `music-tabular-formatter-0.0.1.vsix` to the left pan
 3. Search for "Tabular Music Formatter".
-4. Click "Install".
+4. Ensure it is "Installed".
 
 ## Contributing
 
