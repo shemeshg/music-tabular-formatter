@@ -10,14 +10,15 @@
 - `#` - Sharp
 - `b` - Flat
 - `-` - Extend previous note
+- `;` - Silence
 
 ## Example
 
 Only lines starting with `|` will be formatted:
 
 ```text
-||      A      B'  (  C  D ) |  -  A,  E#  : ||    |    ||
-||      A      B       G     |  C  A   F   : ||  A |  B ||
+||      A      B'  (  C  D ) |  -  A,  E#  ; ||    |    ||
+||      A      B       G     |  C  A   F   ; ||  A |  B ||
 ||
 ||         {f_<_fff}         |               ||    |    ||
 
