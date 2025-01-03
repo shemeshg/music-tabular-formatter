@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "music-tabular-formatter.formatSelected",
-        "title": "Music Tabulator: Format Selected"
+        "title": "Music Tabulator: Format Selection"
       }
     ]
   },

@@ -29,7 +29,7 @@ Eisoteric example:
 ## Usage
 
 1. Select the text you want to format.
-2. Run the "Format Music Block" command from the Command Palette (`Ctrl+Shift+P`).
+2. Run the `Music Tabulator: Format Selection` command from the Command Palette (`Ctrl+Shift+P`).
 3. The selected text will be formatted according to the symbols defined above.
 
 ## Installation
