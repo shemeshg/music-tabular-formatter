@@ -47,6 +47,6 @@ Contributions are welcome! Please open an issue or submit a pull request on [Git
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/shemeshg/music-tabular-formatter/blob/main/LICENSE) file for details.
-\```
+
 
 Feel free to copy and paste this into your README file! Let me know if you need any further assistance.
