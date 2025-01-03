@@ -9,6 +9,7 @@
   "categories": [
     "Other"
   ],
+  "publisher": "shemeshg",
   "repository": { "type": "git", "url": "https://github.com/shemeshg/music-tabular-formatter.git" },  
   "activationEvents": [],
   "main": "./dist/extension.js",
