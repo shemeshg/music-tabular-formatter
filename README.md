@@ -1,4 +1,4 @@
-# VSCode Tabular Music Formatter
+# VSCode Music Tabular Formatter
 
 ## Symbols
 
