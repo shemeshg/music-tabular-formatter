@@ -133,20 +133,27 @@ function spredEven(ary: string[], requestedLen: number, fc: FieldsClass, applayF
 function pareseLines(lines: string[], applayFromFieldClass: boolean, fcBars: FieldsClass[]): any[] {
     let retLines: any[] = []
     lines.forEach((valLine, idxLine) => {
-        let retLine: any[] = []
-        barsContent(valLine).forEach((valBar, idxBar) => {
-            let fcBar = new FieldsClass();
-            if (fcBars[idxBar]) {
-                fcBar = fcBars[idxBar]
-            } else {
-                fcBars.push(fcBar)
-            }
-            const barText = spredEven(barItems(valBar), 0, fcBar, applayFromFieldClass)
-            retLine.push(barText)
 
-        })
+        let retLine: any[] = []
+        if (valLine.startsWith('//')) {
+            retLine.push(valLine);            
+        } else {
+            barsContent(valLine).forEach((valBar, idxBar) => {
+                let fcBar = new FieldsClass();
+                if (fcBars[idxBar]) {
+                    fcBar = fcBars[idxBar]
+                } else {
+                    fcBars.push(fcBar)
+                }
+                const barText = spredEven(barItems(valBar), 0, fcBar, applayFromFieldClass)
+                retLine.push(barText)
+    
+            })
+        }
+
         retLines.push(retLine)
     })
+
 
     return retLines;
 }
@@ -157,19 +164,32 @@ function formatMusicBloc(bloack: string): string{
     let preLines = pareseLines(lines, false, fcBars)
     let newLines = preLines.map(innerArray => 
         { 
-            return '|' + innerArray.join('|') + '|'; }
+            if (innerArray.length ===  1 && innerArray[0].trim().startsWith('//')){
+                return innerArray[0];
+            } else {
+                return '|' + innerArray.join('|') + '|'; }
+            }            
         )
 
     let retLines = pareseLines(newLines, true, fcBars)
     newLines = retLines.map(innerArray => 
         { 
-            return '|' + innerArray.join('|') + '|'; }
+            if (innerArray.length ===  1 && innerArray[0].trim().startsWith('//')){
+                return innerArray[0];
+            } else {
+                return '|' + innerArray.join('|') + '|'; }
+            }   
         )
     retLines = pareseLines(newLines, true, fcBars)
 
     let result = retLines.map(innerArray => 
         { 
-            return '|' + innerArray.join('|') + '|'; }
+            if (innerArray.length ===  1 && innerArray[0].trim().startsWith('//')){
+                return innerArray[0];
+            } else {
+                return '|' + innerArray.join('|') + '|'; }
+            }
+            
         ).join('\n');
 
     result = result.replace(/\| \|/g, "||");
@@ -181,7 +201,7 @@ export function formatMusicDoc(doc: string):string{
     const lines = doc.split('\n');
     let accumulatedMusicBlock = "";
     lines.forEach(line => {
-        if (line.startsWith('|') ) {
+        if (line.startsWith('|') || line.startsWith('//')) {
             accumulatedMusicBlock += line + '\n';
         } else {
             if (accumulatedMusicBlock) {
