@@ -25,6 +25,10 @@ Only lines starting with `|` will be formatted:
 Eisoteric example:
 ||  C4..(chromatic)..G |  1..(dim)..5  (  +5 )  (  -2 ) |  C4..G  (  +5 )  (  -2 ) ||
 ||          G          |                G               |             G            ||
+
+||  1   2  3  4   2   3  1 |  5   1'  7,  1'  2 |
+||
+||  5,  6  7  1'  6,  7  5 |  1'  5   4   5   3 |
 ```
 
 ## Usage
