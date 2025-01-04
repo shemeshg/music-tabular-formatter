@@ -222,15 +222,20 @@ function formatMusicBloc(bloack: string): string{
 export function formatMusicDoc(doc: string):string{
     let retDoc = "";
     const lines = doc.split('\n');
+    const totalLinesCount = lines.length;
     let accumulatedMusicBlock = "";
-    lines.forEach(line => {
+    lines.forEach((line,idx) => {
         let lineObj = new LineObj(line);
         if (lineObj.lineType === LineType.Text){
             if (accumulatedMusicBlock) {
                 retDoc += formatMusicBloc(accumulatedMusicBlock) + "\n";
                 accumulatedMusicBlock = "";
             }  
-            retDoc += lineObj.txt + "\n";
+            retDoc += lineObj.txt;
+            if (idx !== totalLinesCount - 1){
+                retDoc += "\n";
+            }
+            
         } else {
             accumulatedMusicBlock += lineObj.txt + '\n';
         }
