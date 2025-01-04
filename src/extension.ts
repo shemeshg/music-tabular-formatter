@@ -21,15 +21,24 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 		let editor = vscode.window.activeTextEditor;
-        if (editor) {
-            let document = editor.document;
-            let selection = editor.selection;
-            let text = document.getText(selection);
-            let formattedText = formatMusicDoc(text);
-            editor.edit(editBuilder => {
-                editBuilder.replace(selection, formattedText);
-            })
+		if (editor) {
+			let document = editor.document;
+			let selection = editor.selection;
+			let text = selection.isEmpty ? document.getText() : document.getText(selection);
+			let formattedText = formatMusicDoc(text);
+			editor.edit(editBuilder => {
+				if (selection.isEmpty) {
+					let fullRange = new vscode.Range(
+						document.positionAt(0),
+						document.positionAt(document.getText().length)
+					);
+					editBuilder.replace(fullRange, formattedText);
+				} else {
+					editBuilder.replace(selection, formattedText);
+				}
+			});
 		}
+		
 
 
 	});
