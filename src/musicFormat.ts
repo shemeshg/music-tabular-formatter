@@ -13,13 +13,13 @@ function getBarPositions(line: string): number[] {
 }
 
 function barsContent(line: string): string[] {
-    const positions = getBarPositions(line)
-    let ret = []
+    const positions = getBarPositions(line);
+    let ret = [];
     for (let i = 0; i < positions.length - 1; i++) {
-        const barContent = line.substring(positions[i] + 1, positions[i + 1])
-        ret.push(barContent)
+        const barContent = line.substring(positions[i] + 1, positions[i + 1]);
+        ret.push(barContent);
     }
-    return ret
+    return ret;
 }
 
 function barItems(barString: string): string[] {
@@ -29,7 +29,7 @@ function barItems(barString: string): string[] {
     if (result) {
         return result;
     }
-    return []
+    return [];
 }
 
 function padLR(text: string, requestedLen: number) {
@@ -48,19 +48,19 @@ function padLR(text: string, requestedLen: number) {
 
 class FieldsClass {
     forId = 0;
-    lens: number[] = []
-    fcs: FieldsClass[] = []
-    totalLen = 0
+    lens: number[] = [];
+    fcs: FieldsClass[] = [];
+    totalLen = 0;
 }
 
 function spredEven(ary: string[], requestedLen: number, fc: FieldsClass, applayFromFieldClass: boolean): string {
     let lenOfAllItemsInAry = ary.reduce((total, item) => total + item.length, 0);
-    let s = ""
-    let spacePerItem = Math.floor(requestedLen / (ary.length))
+    let s = "";
+    let spacePerItem = Math.floor(requestedLen / (ary.length));
 
-    s = " "
+    s = " ";
 
-    let forId = 0
+    let forId = 0;
     ary.forEach(element => {
         // handel pharenses
         let isItEnclosedWithParentheses = element.startsWith('(') && element.endsWith(')');
@@ -69,61 +69,61 @@ function spredEven(ary: string[], requestedLen: number, fc: FieldsClass, applayF
 
 
             let fcChild: FieldsClass = new FieldsClass();
-            fcChild.forId = forId
+            fcChild.forId = forId;
             // if not already exists
             const fcFound = fc.fcs.filter((fcItm) => {
-                return fcItm.forId === forId
-            })
+                return fcItm.forId === forId;
+            });
             if (fcFound.length) {
-                fcChild = fcFound[0]
+                fcChild = fcFound[0];
             } else {
-                fc.fcs.push(fcChild)
+                fc.fcs.push(fcChild);
             }
 
-            let parenthesLen = contentInParentheses.length - 2
+            let parenthesLen = contentInParentheses.length - 2;
    
-            parenthesLen = 0
+            parenthesLen = 0;
                
-            element = "(" + spredEven(barItems(contentInParentheses), parenthesLen, fcChild, applayFromFieldClass) + ")"
+            element = "(" + spredEven(barItems(contentInParentheses), parenthesLen, fcChild, applayFromFieldClass) + ")";
 
         }
 
-        let elementToAdd = ""
+        let elementToAdd = "";
         if (applayFromFieldClass) {            
-            elementToAdd = padLR(element, fc.lens[forId])
+            elementToAdd = padLR(element, fc.lens[forId]);
         } else {
             if (spacePerItem <= element.length) {
-                elementToAdd = " " + element + " "
+                elementToAdd = " " + element + " ";
             } else {                
-                elementToAdd = padLR(element, spacePerItem)
+                elementToAdd = padLR(element, spacePerItem);
             }
             if (fc.lens[forId]) {
                 if (fc.lens[forId] < elementToAdd.length) {
-                    fc.lens[forId] = elementToAdd.length
+                    fc.lens[forId] = elementToAdd.length;
                 }
             } else {
-                fc.lens.push(elementToAdd.length)
+                fc.lens.push(elementToAdd.length);
             }
         }
 
 
-        s = s + elementToAdd
+        s = s + elementToAdd;
         forId++;
     });
 
     if (s.length < requestedLen) {        
-        s = padLR(s, requestedLen)
+        s = padLR(s, requestedLen);
     }
 
     if (applayFromFieldClass) {  
         // if re-run required, bug 
         if (fc.totalLen < s.length) {
-            fc.totalLen = s.length            
+            fc.totalLen = s.length;           
         } 
-        s = padLR(s, fc.totalLen )
+        s = padLR(s, fc.totalLen );
     } else {
         if (fc.totalLen < s.length) {
-            fc.totalLen = s.length
+            fc.totalLen = s.length;
         }
     }
     return s;
@@ -136,28 +136,35 @@ enum LineType {
 }
 
 class LineObj {
-    txt:string = "";
+    private _txt:string = "";
 
     musicBars:string[] = [];
     
     get lineType(): LineType {
-        if (this.txt.startsWith('|') ){
+        if (this._txt.startsWith('|') ){
             return LineType.MusicBlockData;
-        } else if (this.txt.startsWith('//')){
+        } else if (this._txt.startsWith('//')){
             return LineType.MusicBlockRemark;
         } else {
             return LineType.Text;
         }
     }
 
+    get txt(){
+        if (this.lineType === LineType.MusicBlockData && !this._txt.endsWith("|")) {
+            return this._txt + "|";
+        }
+        return this._txt;
+    }
+
     constructor(txt: string){
-        this.txt = txt;
+        this._txt = txt;
 
     }
 }
 
 function pareseLines(lines: string[], applayFromFieldClass: boolean, fcBars: FieldsClass[]): LineObj[] {
-    let retLines: any[] = []
+    let retLines: any[] = [];
     lines.forEach((valLine, idxLine) => {
 
    
@@ -170,7 +177,7 @@ function pareseLines(lines: string[], applayFromFieldClass: boolean, fcBars: Fie
                 } else {
                     fcBars.push(fcBar);
                 }
-                const barText = spredEven(barItems(valBar), 0, fcBar, applayFromFieldClass)
+                const barText = spredEven(barItems(valBar), 0, fcBar, applayFromFieldClass);
                 lineObj.musicBars.push(barText);
     
             });
@@ -192,7 +199,7 @@ function strAryPareseLines(lines: string[], applayFromFieldClass: boolean, fcBar
             } else {
                 return '|' + innerArray.musicBars.join('|') + '|'; }
             }    
-        )
+        );
     return newLines;
 }
 
@@ -213,7 +220,7 @@ function formatMusicBloc(bloack: string): string{
 
 
 export function formatMusicDoc(doc: string):string{
-    let retDoc = ""
+    let retDoc = "";
     const lines = doc.split('\n');
     let accumulatedMusicBlock = "";
     lines.forEach(line => {

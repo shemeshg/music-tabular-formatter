@@ -2,7 +2,7 @@
   "name": "music-tabular-formatter",
   "displayName": "Music Tabular Formatter",
   "description": "formatter for tabular music notation ",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.96.0"
   },

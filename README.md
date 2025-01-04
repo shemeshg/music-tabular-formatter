@@ -10,6 +10,7 @@
 - `#` - Sharp
 - `b` - Flat
 - `-` - Extend previous note
+- `.` - Play previous note
 - `;` - Silence
 
 ## Example
@@ -17,10 +18,10 @@
 Only lines starting with `|` will be formatted:
 
 ```text
-||      A      B'  (  C  D ) |  -  A,  E#  ; ||    |    ||
-||      A      B       G     |  C  A   F   ; ||  A |  B ||
+||      A      B'  (  C  D ) |  -  A,  E#  ; ||    |          ||
+||      A      B       G     |  C  A   F   ; ||  A |  B  .  . ||
 // remarks part of block  
-||         {f_<_fff}         |               ||    |    ||
+||         {f_<_fff}         |               ||    |          ||
 
 Eisoteric example:
 ||  C4..(chromatic)..G |  1..(dim)..5  (  +5 )  (  -2 ) |  C4..G  (  +5 )  (  -2 ) ||
