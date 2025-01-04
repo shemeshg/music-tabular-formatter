@@ -151,7 +151,7 @@ class LineObj {
     }
 
     get txt(){
-        if (this.lineType === LineType.MusicBlockData && !this._txt.endsWith("|")) {
+        if (this.lineType === LineType.MusicBlockData && !this._txt.trim().endsWith("|")) {
             return this._txt + "|";
         }
         return this._txt;
