@@ -129,90 +129,107 @@ function spredEven(ary: string[], requestedLen: number, fc: FieldsClass, applayF
     return s;
 }
 
+enum LineType {
+    MusicBlockData,
+    MusicBlockRemark,
+    Text
+}
 
-function pareseLines(lines: string[], applayFromFieldClass: boolean, fcBars: FieldsClass[]): any[] {
+class LineObj {
+    txt:string = "";
+
+    musicBars:string[] = [];
+    
+    get lineType(): LineType {
+        if (this.txt.startsWith('|') ){
+            return LineType.MusicBlockData;
+        } else if (this.txt.startsWith('//')){
+            return LineType.MusicBlockRemark;
+        } else {
+            return LineType.Text;
+        }
+    }
+
+    constructor(txt: string){
+        this.txt = txt;
+
+    }
+}
+
+function pareseLines(lines: string[], applayFromFieldClass: boolean, fcBars: FieldsClass[]): LineObj[] {
     let retLines: any[] = []
     lines.forEach((valLine, idxLine) => {
 
-        let retLine: any[] = []
-        if (valLine.startsWith('//')) {
-            retLine.push(valLine);            
-        } else {
+   
+        let lineObj:LineObj = new LineObj(valLine);
+        if (lineObj.lineType === LineType.MusicBlockData){
             barsContent(valLine).forEach((valBar, idxBar) => {
                 let fcBar = new FieldsClass();
                 if (fcBars[idxBar]) {
-                    fcBar = fcBars[idxBar]
+                    fcBar = fcBars[idxBar];
                 } else {
-                    fcBars.push(fcBar)
+                    fcBars.push(fcBar);
                 }
                 const barText = spredEven(barItems(valBar), 0, fcBar, applayFromFieldClass)
-                retLine.push(barText)
+                lineObj.musicBars.push(barText);
     
-            })
+            });
         }
 
-        retLines.push(retLine)
-    })
+        retLines.push(lineObj);
+    });
 
 
     return retLines;
 }
 
+function strAryPareseLines(lines: string[], applayFromFieldClass: boolean, fcBars: FieldsClass[]): string[] {
+    let retLines = pareseLines(lines, applayFromFieldClass, fcBars);
+    let newLines = retLines.map(innerArray => 
+        { 
+            if (innerArray.lineType === LineType.MusicBlockRemark){
+                return innerArray.txt;
+            } else {
+                return '|' + innerArray.musicBars.join('|') + '|'; }
+            }    
+        )
+    return newLines;
+}
+
 function formatMusicBloc(bloack: string): string{
-    let lines =  bloack.trim().split("\n")
-    let fcBars: FieldsClass[] = []
-    let preLines = pareseLines(lines, false, fcBars)
-    let newLines = preLines.map(innerArray => 
-        { 
-            if (innerArray.length ===  1 && innerArray[0].trim().startsWith('//')){
-                return innerArray[0];
-            } else {
-                return '|' + innerArray.join('|') + '|'; }
-            }            
-        )
+    let lines =  bloack.trim().split("\n");
+    let fcBars: FieldsClass[] = [];
 
-    let retLines = pareseLines(newLines, true, fcBars)
-    newLines = retLines.map(innerArray => 
-        { 
-            if (innerArray.length ===  1 && innerArray[0].trim().startsWith('//')){
-                return innerArray[0];
-            } else {
-                return '|' + innerArray.join('|') + '|'; }
-            }   
-        )
-    retLines = pareseLines(newLines, true, fcBars)
+    let newLines = strAryPareseLines(lines, false, fcBars);
+    newLines = strAryPareseLines(newLines, true, fcBars);
+    newLines = strAryPareseLines(newLines, true, fcBars);
 
-    let result = retLines.map(innerArray => 
-        { 
-            if (innerArray.length ===  1 && innerArray[0].trim().startsWith('//')){
-                return innerArray[0];
-            } else {
-                return '|' + innerArray.join('|') + '|'; }
-            }
-            
-        ).join('\n');
+    let result = newLines.join('\n');
 
     result = result.replace(/\| \|/g, "||");
     return result;
 }
+
+
 
 export function formatMusicDoc(doc: string):string{
     let retDoc = ""
     const lines = doc.split('\n');
     let accumulatedMusicBlock = "";
     lines.forEach(line => {
-        if (line.startsWith('|') || line.startsWith('//')) {
-            accumulatedMusicBlock += line + '\n';
-        } else {
+        let lineObj = new LineObj(line);
+        if (lineObj.lineType === LineType.Text){
             if (accumulatedMusicBlock) {
                 retDoc += formatMusicBloc(accumulatedMusicBlock) + "\n";
-                accumulatedMusicBlock = ""
+                accumulatedMusicBlock = "";
             }  
-            retDoc += line + "\n";
+            retDoc += lineObj.txt + "\n";
+        } else {
+            accumulatedMusicBlock += lineObj.txt + '\n';
         }
-    })
+    });
     if (accumulatedMusicBlock) {
-        retDoc += formatMusicBloc(accumulatedMusicBlock)
+        retDoc += formatMusicBloc(accumulatedMusicBlock);
     } 
     return retDoc;
 }
