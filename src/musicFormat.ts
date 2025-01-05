@@ -16,7 +16,6 @@ class SpredEven {
         return this._spredEven(this.barItems(barString), requestedLen, fc, applayFromFieldClass);
     }
     private _spredEven(ary: string[], requestedLen: number, fc: FieldsClass, applayFromFieldClass: boolean): string {
-        let lenOfAllItemsInAry = ary.reduce((total, item) => total + item.length, 0);
         let s = "";
         let spacePerItem = Math.floor(requestedLen / (ary.length));
     
