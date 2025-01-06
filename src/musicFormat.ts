@@ -112,7 +112,7 @@ class SpredEven {
     private barItems(barString: string): string[] {
     
     
-        let result = barString.match(/\([^)]*\)|\S+/g);
+        let result = barString.match(/\(\ [^)]*\ \)|\S+/g);
         if (result) {
             return result;
         }

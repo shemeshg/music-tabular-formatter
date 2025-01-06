@@ -47,14 +47,14 @@ K:Gm
 %            End of header, start of tune body:
 % 1
 // [V:T1] 
-|  (B2c2 d2g2) |     f6e2    |    (d2c2  d2)  e2   |  d4  c2z2 |
+|  (B2c2  d2g2) |     f6e2    |  (d2   c2)  e2 |  d4  c2z2 |
 // [V:B1] 
-|      z8      |  z2f2  g2a2 |     b2z2     z2  e2 |  f4  f2z2 |
+|      z8       |  z2f2  g2a2 |  b2z2  z2   e2 |  f4  f2z2 |
 % 5
 // [V:T1]  
-|  (B2c2 d2g2)  |  f8  |  d3c  (d2fe) |   H    d6 ||
+|  (B2c2  d2g2)  |  f8  |  d3c  (d2fe) |   H    d6 ||
 //[V:B1]  
-|  (d2f2 b2e'2) |  d'8 |  g3g    g4   |    H^f6   ||
+|  (d2f2  b2e'2) |  d'8 |  g3g    g4   |    H^f6   ||
 ```
 
 ```
