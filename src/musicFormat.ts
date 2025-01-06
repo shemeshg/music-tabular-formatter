@@ -24,7 +24,7 @@ class SpredEven {
         let forId = 0;
         ary.forEach(element => {
             // handel pharenses
-            let isItEnclosedWithParentheses = element.startsWith('(') && element.endsWith(')');
+            let isItEnclosedWithParentheses = element.startsWith('( ') && element.endsWith(' )');
             if (isItEnclosedWithParentheses) {
                 let contentInParentheses = element.slice(1, -1);
     

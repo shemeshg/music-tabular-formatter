@@ -4,6 +4,8 @@
 
 - `||` - Bar
 - `|` - Bit
+- `( ` ` )`  - Group notes, parentheses must followed by space to group.
+
 - `'` - Upper octave
 - `,` - Lower octave
 - `~` - Bekar (un-sharp)
@@ -12,6 +14,7 @@
 - `-` - Extend previous note
 - `.` - Play previous note
 - `;` - Silence
+
 
 ## Example
 
@@ -31,7 +34,46 @@ Eisoteric example:
 ||
 ||  5,  6  7  1'  6,  7  5 |  1'  5   4   5   3 |
 ```
+```
+X:1
+T:Title
+C: Composer
+M:C
+Q:1/4=76
+%%score (T1 ) (B1 )
+V:T1           clef=treble-8  
+V:B1  clef=bass     octave=-2
+K:Gm
+%            End of header, start of tune body:
+% 1
+// [V:T1] 
+|  (B2c2 d2g2) |     f6e2    |    (d2c2  d2)  e2   |  d4  c2z2 |
+// [V:B1] 
+|      z8      |  z2f2  g2a2 |     b2z2     z2  e2 |  f4  f2z2 |
+% 5
+// [V:T1]  
+|  (B2c2 d2g2)  |  f8  |  d3c  (d2fe) |   H    d6 ||
+//[V:B1]  
+|  (d2f2 b2e'2) |  d'8 |  g3g    g4   |    H^f6   ||
+```
 
+```
+X:1
+T:Title
+C: Composer
+M:C
+Q:1/4=76
+V:T1           clef=treble-8  
+K:C
+// [V:T1] 
+|  a  b  c |  de  fg ||
+%
+// [V:T1] 
+|  a  a  a  a |  aaaa  aaaa |
+%
+// [V:T1 octave=-1] 
+|  A  a  a'  a'' |
+```
 ## Usage
 
 1. Select the text you want to format.
